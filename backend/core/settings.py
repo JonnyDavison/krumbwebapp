@@ -25,9 +25,9 @@ SECRET_KEY = 'django-insecure-vualsc^gryv5d5y4*d*tf7!38akzz#&$(^$cavl5q-*_7t3&57
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
+ALLOWED_HOSTS = ['8000-jonnydaviso-krumbwebapp-fe73killb6c.ws-eu115.gitpod.io']
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173']
+CSRF_TRUSTED_ORIGINS = ['https://8000-jonnydaviso-krumbwebapp-fe73killb6c.ws-eu115.gitpod.io']
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,6 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+    'corsheaders',
+
+    'products',
+    'gallery'
+
 ]
 
 MIDDLEWARE = [
