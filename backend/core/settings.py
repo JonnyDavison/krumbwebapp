@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,10 +29,24 @@ SECRET_KEY = 'django-insecure-vualsc^gryv5d5y4*d*tf7!38akzz#&$(^$cavl5q-*_7t3&57
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# 'https://5173-jonnydaviso-krumbwebapp-fe73killb6c.ws-eu115.gitpod.io',
 
-ALLOWED_HOSTS = ['8000-jonnydaviso-krumbwebapp-fe73killb6c.ws-eu115.gitpod.io']
-CORS_ALLOWED_ORIGINS = ['http://localhost:5173']
-CSRF_TRUSTED_ORIGINS = ['https://8000-jonnydaviso-krumbwebapp-fe73killb6c.ws-eu115.gitpod.io']
+ALLOWED_HOSTS = ['8000-jonnydaviso-krumbwebapp-fe73killb6c.ws-eu115.gitpod.io', '5173-jonnydaviso-krumbwebapp-fe73killb6c.ws-eu115.gitpod.io']
+CSRF_TRUSTED_ORIGINS = ['https://8000-jonnydaviso-krumbwebapp-fe73killb6c.ws-eu115.gitpod.io', 'https://5173-jonnydaviso-krumbwebapp-fe73killb6c.ws-eu115.gitpod.io/']
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,15 +61,17 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'products',
-    'gallery'
+    'gallery',
+    'api',
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -128,3 +149,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# CORS_ALLOWED_ORIGINS = [ 'http://8000-jonnydaviso-krumbwebapp-fe73killb6c.ws-eu115.gitpod.io','http://5137-jonnydaviso-krumbwebapp-fe73killb6c.ws-eu115.gitpod.io']
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWS_CREDENTIALS = True
